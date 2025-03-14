@@ -157,11 +157,11 @@ export const CHAT_USER_TIER_PRICES: UserTierPrice[] =
 
   [
     { users: 60, essentialsPrice: 1999, professionalPrice: 6999 },
-    { users: 100, essentialsPrice: 3332 * 10, professionalPrice: 11665 * 8 },
-    { users: 150, essentialsPrice: 4997 * 10, professionalPrice: 17497 * 8 },
-    { users: 200, essentialsPrice: 6662 * 10, professionalPrice: 23330 * 8 },
-    { users: 250, essentialsPrice: 8328 * 10, professionalPrice: 29165 * 8 },
-    { users: 300, essentialsPrice: 9993 * 10, professionalPrice: null },
+    { users: 100, essentialsPrice: 1666 * 10, professionalPrice: 11665 * 8 },
+    { users: 150, essentialsPrice: 9999 * 10, professionalPrice: 17497 * 8 },
+    { users: 200, essentialsPrice: 19999 * 10, professionalPrice: 23330 * 8 },
+    { users: 250, essentialsPrice: 29999 * 10, professionalPrice: 29165 * 8 },
+    { users: 300, essentialsPrice: null, professionalPrice: null },
     { users: 350, essentialsPrice: null, professionalPrice: null },
     { users: 400, essentialsPrice: null, professionalPrice: null },
     { users: 450, essentialsPrice: null, professionalPrice: null },
