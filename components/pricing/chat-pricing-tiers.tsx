@@ -277,150 +277,148 @@ export default function ChatBotPricingTiers({
         {pricingTiers.map((tier) => (
           <div
             key={tier.name}
-            className={`rounded-lg overflow-hidden hover:scale-105 border-2   transition-all duration-200 `}
+            className={`p-6 h-full flex flex-col rounded-lg border-2 hover:scale-105 transition-all duration-200 ${
+              tier.name === "Enterprise"
+                ? "bg-blue-500 text-white shadow-lg hover:border-slate-400"
+                : "bg-white hover:border-yellow-400"
+            }`}
           >
-            <div
-              className={`p-6 h-full flex flex-col bg-white shadow-lg ${
-                tier.name === "Enterprise"
-                  ? "bg-blue-800 text-white shadow-lg hover:border-slate-400"
-                  : "bg-white hover:border-yellow-400"
-              }
+            <h3 className="text-xl font-bold mb-2">{tier.name}</h3>
+
+            {tier.monthlyPrice !== null ? (
+              <div className="mb-4">
+                <div className="flex items-baseline">
+                  <span className="text-sm">{getCurrencySymbol(currency)}</span>
+                  <span className="text-3xl font-bold">
+                    {formatPrice(tier.monthlyPrice, currency)}
+                  </span>
+                  <span className="text-gray-400 ml-1">
+                    /{billingCycle === "monthly" ? "month" : "year"}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              tier.name !== "Free" && (
+                <div className="mb-4">
+                  <span className="text-xl">Get in touch</span>
+                </div>
+              )
+            )}
+
+            <p
+              className={`text-gray-400 mb-6 ${
+                tier.name === "Enterprise" ? "text-white" : "text-gray-400"
               }`}
             >
-              <h3 className="text-xl font-bold mb-2">{tier.name}</h3>
+              {tier.description}
+            </p>
+            <div className="mt-5">
+              <Button
+                onClick={() =>
+                  console.log(`${tier.buttonAction} for ${tier.name}`)
+                }
+                variant={tier.name === "Free" ? "secondary" : "outline"}
+                className={`mb-6 w-full bg-white text-yellow-400 border-2 border-yellow-200 hover:bg-yellow-400 hover:text-white shadow-lg ${
+                  tier.name === "Enterprise"
+                    ? "bg-yellow-400 text-white hover:bg-white hover:text-yellow-400"
+                    : "shadow-yellow-100 "
+                }`}
+              >
+                {tier.buttonText}
+                {tier.buttonAction === "start" && (
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                )}
+              </Button>
 
-              {tier.monthlyPrice !== null ? (
-                <div className="mb-4">
-                  <div className="flex items-baseline">
-                    <span className="text-sm">
-                      {getCurrencySymbol(currency)}
+              <div className="text-sm">
+                <ul className="space-y-4">
+                  {/* Tring AI with Dynamic Sessions */}
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                    <span>
+                      Tring AI
+                      <br />
+                      {tier.name === "Free"
+                        ? "50"
+                        : tier.name === "Intelligence"
+                        ? activeUsers < 60
+                          ? activeUsers
+                          : 60
+                        : tier.name === "Super Intelligence"
+                        ? activeUsers <= 250
+                          ? 250
+                          : activeUsers
+                        : "1000+"}{" "}
+                      Free Chat Sessions
                     </span>
-                    <span className="text-3xl font-bold">
-                      {formatPrice(tier.monthlyPrice, currency)}
+                  </li>
+
+                  {/* No of Chatbots */}
+                  <li className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                    <span>
+                      {tier.name === "Free"
+                        ? "1"
+                        : tier.name === "Intelligence"
+                        ? "2"
+                        : tier.name === "Super Intelligence"
+                        ? "10"
+                        : "Unlimited"}{" "}
+                      Chatbot
+                      {tier.name === "Free" || tier.name === "Intelligence"
+                        ? ""
+                        : "s"}
                     </span>
-                    <span className="text-gray-400 ml-1">
-                      /{billingCycle === "monthly" ? "month" : "year"}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                tier.name !== "Free" && (
-                  <div className="mb-4">
-                    <span className="text-xl">Get in touch</span>
-                  </div>
-                )
-              )}
+                  </li>
 
-              <p className="text-gray-400 mb-6 h-24 p-3">{tier.description}</p>
-
-              <div className="mt-5">
-                <Button
-                  onClick={() =>
-                    console.log(`${tier.buttonAction} for ${tier.name}`)
-                  }
-                  variant={tier.name === "Free" ? "secondary" : "outline"}
-                  className={`mb-6 w-full bg-white text-yellow-400 border-2 border-yellow-200 hover:bg-yellow-400 hover:text-white shadow-lg ${
-                    tier.name === "Enterprise"
-                      ? "bg-yellow-400 text-white hover:bg-white hover:text-yellow-400"
-                      : "shadow-yellow-100 "
-                  }`}
-                >
-                  {tier.buttonText}
-                  {tier.buttonAction === "start" && (
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  )}
-                </Button>
-
-                <div className="text-sm">
-                  <ul className="space-y-4">
-                    {/* Tring AI with Dynamic Sessions */}
-                    <li className="flex items-start">
+                  {/* Widget Customization */}
+                  <li className="flex items-start">
+                    {tier.name === "Free" ? (
+                      <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
+                    ) : (
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                      <span>
-                        Tring AI
-                        <br />
-                        {tier.name === "Free"
-                          ? "50"
-                          : tier.name === "Intelligence"
-                          ? activeUsers < 60
-                            ? activeUsers
-                            : 60
-                          : tier.name === "Super Intelligence"
-                          ? activeUsers <= 250
-                            ? 250
-                            : activeUsers
-                          : "1000+"}{" "}
-                        Free Chat Sessions
-                      </span>
-                    </li>
+                    )}
+                    <span>Widget Customization</span>
+                  </li>
 
-                    {/* No of Chatbots */}
-                    <li className="flex items-start">
+                  {/* Lead Gen */}
+                  <li className="flex items-start">
+                    {tier.name === "Free" || tier.name === "Intelligence" ? (
+                      <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
+                    ) : (
                       <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                      <span>
-                        {tier.name === "Free"
-                          ? "1"
-                          : tier.name === "Intelligence"
-                          ? "2"
-                          : tier.name === "Super Intelligence"
-                          ? "10"
-                          : "Unlimited"}{" "}
-                        Chatbot
-                        {tier.name === "Free" || tier.name === "Intelligence"
-                          ? ""
-                          : "s"}
-                      </span>
-                    </li>
+                    )}
+                    <span>Lead Gen</span>
+                  </li>
 
-                    {/* Widget Customization */}
-                    <li className="flex items-start">
-                      {tier.name === "Free" ? (
-                        <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
-                      ) : (
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                      )}
-                      <span>Widget Customization</span>
-                    </li>
+                  {/* CRM Integration */}
+                  <li className="flex items-start">
+                    {tier.name === "Free" || tier.name === "Intelligence" ? (
+                      <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
+                    ) : (
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                    )}
+                    <span>CRM Integration</span>
+                  </li>
 
-                    {/* Lead Gen */}
-                    <li className="flex items-start">
-                      {tier.name === "Free" || tier.name === "Intelligence" ? (
-                        <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
-                      ) : (
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                      )}
-                      <span>Lead Gen</span>
-                    </li>
-
-                    {/* CRM Integration */}
-                    <li className="flex items-start">
-                      {tier.name === "Free" || tier.name === "Intelligence" ? (
-                        <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
-                      ) : (
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                      )}
-                      <span>CRM Integration</span>
-                    </li>
-
-                    {/* Extra Chat Session */}
-                    <li className="flex items-start">
-                      {tier.name === "Free" ? (
-                        <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
-                      ) : (
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                      )}
-                      <span>
-                        {tier.name === "Free"
-                          ? "Extra Chat Session"
-                          : tier.name === "Intelligence"
-                          ? "₹10 per Chat Session"
-                          : tier.name === "Super Intelligence"
-                          ? "₹8 per Chat Session"
-                          : "Talk to sales for Extra Chat Session"}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
+                  {/* Extra Chat Session */}
+                  <li className="flex items-start">
+                    {tier.name === "Free" ? (
+                      <X className="h-5 w-5 text-red-500 mr-2 flex-shrink-0" />
+                    ) : (
+                      <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
+                    )}
+                    <span>
+                      {tier.name === "Free"
+                        ? "Extra Chat Session"
+                        : tier.name === "Intelligence"
+                        ? "₹10 per Chat Session"
+                        : tier.name === "Super Intelligence"
+                        ? "₹8 per Chat Session"
+                        : "Talk to sales for Extra Chat Session"}
+                    </span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
