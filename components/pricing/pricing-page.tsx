@@ -240,7 +240,7 @@ export default function PricingPage() {
                       onClick={() => setActiveSession(preset)}
                       className={`${
                         activeSession === preset ? "text-white font-bold" : ""
-                      }`}
+                      } ${preset > 500 ? "hidden sm:inline-block" : ""}`}
                     >
                       {preset >= 1000 ? `${preset / 1000}k` : preset}
                     </button>
