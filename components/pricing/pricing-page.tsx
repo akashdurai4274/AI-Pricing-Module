@@ -232,7 +232,8 @@ export default function PricingPage() {
                     className="mb-6"
                   />
                 </div>
-                <div className="flex justify-between text-sm text-gray-400">
+                {/* <div className="flex justify-between text-sm text-gray-400"> */}
+                <div className="flex flex-wrap justify-between gap-2 text-xs sm:text-sm text-gray-400">
                   {sessions.map((preset) => (
                     <button
                       key={preset}
@@ -311,7 +312,6 @@ export default function PricingPage() {
         {/* Pricing Tiers */}
         <section className=" px-4 sm:px-6 lg:px-8 ">
           <div className="container mx-auto max-w-6xl">
-            
             <div className=" dark:bg-gray-900 rounded-lg ">
               {businessType === "chat" ? (
                 <ChatBotPricingTiers
